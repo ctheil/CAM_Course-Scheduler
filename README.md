@@ -5,7 +5,12 @@ This project was created to display course schedules in calendar and list views 
 The entire project is based on the [React](https://reactjs.org/) library. The Calendar views are built using [Full Calendar](https://fullcalendar.io/). To build this project, you should be familiar with a modern ES6 development environmnet, including how to use nmp and yarn. I developed the project using [Atom](https://atom.io/) and [yarn](https://classic.yarnpkg.com/lang/en/) to install packages via the OSX terminal.
 
 ## Future development
+
 A future goal for this project would be to create [React-native](https://reactnative.dev/) applications focusing on a limited subset of the broad functionality found in this project.
+
+### Authentication
+
+In order for admins to access the formstack component, an authentication wrapper has been added which required a global password relative to the College of Arts and Media.
 
 ### calendar view
 
@@ -64,24 +69,24 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+This section has moved here: <https://facebook.github.io/create-react-app/docs/code-splitting>
 
 ### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+This section has moved here: <https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size>
 
 ### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+This section has moved here: <https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app>
 
 ### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+This section has moved here: <https://facebook.github.io/create-react-app/docs/advanced-configuration>
 
 ### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+This section has moved here: <https://facebook.github.io/create-react-app/docs/deployment>
 
 ### `yarn build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This section has moved here: <https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify>
