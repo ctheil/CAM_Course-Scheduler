@@ -11,6 +11,7 @@ import Skeleton from "./components/Skeleton/";
 import SubjectToggles from "./components/SubjectToggles/";
 import { getEventSources } from "./components/FormattingUtilities.js";
 import semesterCodes from "../public/semesterCodes.json";
+import { CookiesProvider } from "react-cookie";
 
 export default class App extends React.Component {
   fullCalendarRef = React.createRef();
@@ -188,7 +189,7 @@ export default class App extends React.Component {
           <label className="error">
             {this.state.errorMessage
               ? this.state.errorMessage +
-                "\n\n Sorry! Bryan set this up to check 2 semesters ahead of today! \n\n Contact Assoc. Prof. Bryan Leister at bryan.leister@ucdenver.edu if you want him to change that..."
+              "\n\n Sorry! Bryan set this up to check 2 semesters ahead of today! \n\n Contact Assoc. Prof. Bryan Leister at bryan.leister@ucdenver.edu if you want him to change that..."
               : ""}
           </label>
           {calendarView} {skeleton} {courselistingView}
@@ -270,7 +271,7 @@ export default class App extends React.Component {
     this.setState({
       showCalendar: false
     });
-    setTimeout(function() {
+    setTimeout(function () {
       window.top.React.setState({
         showCalendar: true
       });
@@ -474,9 +475,9 @@ export default class App extends React.Component {
 
     console.log(
       "Excluding TA's and courses with 1 enrolled, i.e. Independent Studies (IS)\n" +
-        "CAM totals also exclude MSMF, MSRA and ARTS courses\n\n" +
-        semesterCodes[this.state.currentSemesterPosition].value +
-        "\tSUBJECT\tINSTR\tENROL\tRATIO\tTA's\tIS\t"
+      "CAM totals also exclude MSMF, MSRA and ARTS courses\n\n" +
+      semesterCodes[this.state.currentSemesterPosition].value +
+      "\tSUBJECT\tINSTR\tENROL\tRATIO\tTA's\tIS\t"
     );
 
     let camTeacherCount = 0;
@@ -547,16 +548,16 @@ export default class App extends React.Component {
     ).toFixed(2);
     console.log(
       "\n            \tCAM\t" +
-        camTeacherCount +
-        "\t" +
-        camStudentCount +
-        "\t" +
-        camRatio +
-        "\t" +
-        camTACount +
-        "\t" +
-        camISCount +
-        "\n\n"
+      camTeacherCount +
+      "\t" +
+      camStudentCount +
+      "\t" +
+      camRatio +
+      "\t" +
+      camTACount +
+      "\t" +
+      camISCount +
+      "\n\n"
     );
     //let today = new Date();
     //console.log(today);

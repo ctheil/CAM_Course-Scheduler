@@ -1,7 +1,9 @@
 
 import React from "react";
 import "./auth.css"
-import { compare_pwd } from "./hasher"
+import { compare_hashed, compare_pwd, hash_pw } from "./hasher"
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
 
 const DEFAULT_HELPER = {
   show: false,
@@ -12,12 +14,21 @@ const DEFAULT_HELPER = {
 const MAX_ATTEMPTS = 10;
 
 class PasswordWall extends React.Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  }
   constructor(props) {
     super(props);
+    // const { cookies } = props;
+    this.cookies = props.cookies;
+
     this.cached_auth = this.retrive("cam_auth")
     if (!this.cached_auth) this.store("cam_auth", false)
+
     this.cached_attempts = this.retrive("cam_auth_attempts")
+
     this.handleSubmit = this.handleSubmit.bind(this)
+
     this.state = {
       auth: !!this.cached_auth,
       invalid: false,
@@ -28,46 +39,40 @@ class PasswordWall extends React.Component {
     }
   }
 
-  store(key, value) {
-    localStorage.setItem(key, JSON.stringify(value))
+
+  /**
+   * Store auth data in a cookie
+   * @param {string} key - cookie access key
+   * @param {string} value - cookie value (to be strinfied)
+   * @param {object} options - cookies options
+   * */
+  store(key, value, options = {}) {
+    const opts = {
+      path: "/",
+      maxAge: 30 * 24 * 60 * 60, // 30 days * 24 hours * 60 minutes * 60 seconds = 30 days.
+      ...options
+    }
+    this.cookies.set(key, JSON.stringify(value), opts)
     return value
   }
+  /**
+   * Retrieve data from a cookie
+   * @param {string} key - cookie access key
+   * @returns {value} - Parsed value stored in cookie (originally stringified)
+   * */
   retrive(key) {
-    return localStorage.getItem(key)
+    const value = this.cookies.get(key)
+    if (!value) return
+    return JSON.parse(value)
   }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() { }
-
-  //
-  // /**
-  // * Implements a password wall before the redirect
-  // * @callback continueCallback - Callback to run once authenticated.
-  // * @param {string} endpoint - Passed into the 
-  // */
-  //
-  // /**
-  // * Implements a password wall before the redirect
-  // * @param {continueCallback} cb - Callback to run once authenticated.
-  // * @param {string} endpoint - Passed into the 
-  // */
-  // authenticate(cb, endpoint) {
-  //
-  // }
-
 
   async handleSubmit(event) {
     // post to 
     event.preventDefault()
-    console.log("handleSubmit")
     const password = event.target[0].value
 
     const is_valid = await compare_pwd(password)
-    console.log("password", password, is_valid)
     if (!is_valid) {
-      console.log("state", this.state)
       this.setState({
         auth: false,
         helper: {
@@ -75,14 +80,12 @@ class PasswordWall extends React.Component {
           state: "invlid",
           msg: "Invalid password. Please try again.",
           attempts: this.store("cam_auth_attempts", this.state.helper.attempts + 1)
-          // attempts: this.state.helper.attempts + 1
         }
       })
-      console.log(this.state.helper)
       return
     }
     this.store("cam_auth", true)
-    this.store("cam_auth_attempts", 0)
+    this.store("cam_auth_attempts", 0, { maxAge: 10 * 60 * 60 }) // 10 minutes 
     this.setState({
       auth: true,
       helper: DEFAULT_HELPER
@@ -90,8 +93,7 @@ class PasswordWall extends React.Component {
   }
 
   render() {
-    console.log("render: state: ", this)
-    if (this.state?.auth) {
+    if (this.state.auth) {
       return this.props.children
     }
     if (MAX_ATTEMPTS - this.state.helper.attempts <= 0) {
@@ -124,4 +126,4 @@ class PasswordWall extends React.Component {
   }
 }
 
-export default PasswordWall;
+export default withCookies(PasswordWall);

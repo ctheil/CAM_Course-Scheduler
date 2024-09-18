@@ -7,6 +7,7 @@ import requestors from "../../data/requestors.json";
 import PasswordWall from "../Auth"
 
 import "./formstack.css";
+import { CookiesProvider } from "react-cookie";
 
 class FSButton extends React.Component {
   constructor(props) {
@@ -213,46 +214,48 @@ class FSButton extends React.Component {
 
   render() {
     return (
-      <PasswordWall>
-        <form
-          className="formstack"
-          action={this.state.add ? this.addCourseURL() : this.courseChangeURL()}
-          method="post"
-          target="_blank"
-          disabled={true}
-        >
-          <div>
-            <CustomSelect
-              name="Your Name"
-              onSelectChange={this.changeFrom}
-              data={requestors}
-            />
-            {/*<CustomSelect
+      <CookiesProvider>
+        <PasswordWall>
+          <form
+            className="formstack"
+            action={this.state.add ? this.addCourseURL() : this.courseChangeURL()}
+            method="post"
+            target="_blank"
+            disabled={true}
+          >
+            <div>
+              <CustomSelect
+                name="Your Name"
+                onSelectChange={this.changeFrom}
+                data={requestors}
+              />
+              {/*<CustomSelect
             name="Formstack Approver"
             onSelectChange={this.changeApprover}
             data={approvers}
           />*/}
-            <ToggleSwitch
-              id="Add"
-              key="Add"
-              className="add_toggle"
-              Text={["Add", "Add"]}
-              Name="Add Toggle"
-              onChange={this.onCheckboxChange}
-              defaultChecked={!this.state.isFutureCourse}
-              Small={false}
-              disabled={!this.state.isFutureCourse}
-            />
-            <button
-              className="fc-button fc-button-primary"
-              type="submit"
-              disabled={this.validateAndSubmit()}
-            >
-              {this.state.add ? "Add/Clone" : "Change"}
-            </button>
-          </div>
-        </form>
-      </PasswordWall>
+              <ToggleSwitch
+                id="Add"
+                key="Add"
+                className="add_toggle"
+                Text={["Add", "Add"]}
+                Name="Add Toggle"
+                onChange={this.onCheckboxChange}
+                defaultChecked={!this.state.isFutureCourse}
+                Small={false}
+                disabled={!this.state.isFutureCourse}
+              />
+              <button
+                className="fc-button fc-button-primary"
+                type="submit"
+                disabled={this.validateAndSubmit()}
+              >
+                {this.state.add ? "Add/Clone" : "Change"}
+              </button>
+            </div>
+          </form>
+        </PasswordWall>
+      </CookiesProvider>
     );
   }
 }
