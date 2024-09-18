@@ -1,0 +1,45 @@
+.auth {
+  background-color: #eee;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.auth__heading {
+  font-size: 1rem;
+  color: red;
+  margin: 0;
+}
+.auth__text {
+  font-size: 0.8rem;
+  max-width: 70ch;
+  margin: 0;
+  padding-bottom: 8px;
+}
+.auth__input {
+  border: none;
+  outline: none;
+  padding: 0.6em 0.8em 0.5em 0.8em;
+  border-radius: 0.5em;
+  width: 30%;
+  min-width: 15rem;
+}
+.auth__input--wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.auth__input--helper-text {
+  font-size: 0.8rem;
+  color: red;
+  margin: 2px;
+  padding-left: 2px;
+}
+.auth__input--invlid {
+  border: solid red 1px;
+}
+form {
+  display: flex;
+  gap: 1rem;
+}
